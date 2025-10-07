@@ -56,6 +56,18 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                     b.HasIndex("StaffId");
 
                     b.ToTable("ApproveParkings");
+
+                    b.HasData(
+                        new
+                        {
+                            ApproveParkingId = 1,
+                            CreatedDate = new DateTime(2024, 1, 5, 9, 0, 0, 0, DateTimeKind.Utc),
+                            Note = "Giám sát hiện trường",
+                            NoteForAdmin = "Hồ sơ đạt yêu cầu",
+                            ParkingId = 1,
+                            StaffId = 3,
+                            Status = "Approved"
+                        });
                 });
 
             modelBuilder.Entity("Parking.FindingSlotManagement.Domain.Entities.Bill", b =>
@@ -88,6 +100,17 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                     b.HasIndex("WalletId");
 
                     b.ToTable("Bills");
+
+                    b.HasData(
+                        new
+                        {
+                            BillId = 1,
+                            BusinessId = 1,
+                            Price = 30000m,
+                            Status = "Paid",
+                            Time = new DateTime(2024, 1, 10, 10, 5, 0, 0, DateTimeKind.Utc),
+                            WalletId = 5
+                        });
                 });
 
             modelBuilder.Entity("Parking.FindingSlotManagement.Domain.Entities.Booking", b =>
@@ -156,6 +179,26 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                     b.HasIndex(new[] { "VehicleInforId" }, "IX_Booking_VehicleInforID");
 
                     b.ToTable("Booking", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            BookingId = 1,
+                            CheckinTime = new DateTime(2024, 1, 10, 8, 5, 0, 0, DateTimeKind.Utc),
+                            CheckoutTime = new DateTime(2024, 1, 10, 10, 2, 0, 0, DateTimeKind.Utc),
+                            DateBook = new DateTime(2024, 1, 9, 12, 0, 0, 0, DateTimeKind.Utc),
+                            EndTime = new DateTime(2024, 1, 10, 10, 0, 0, 0, DateTimeKind.Utc),
+                            GuestName = "Pham Thi D",
+                            GuestPhone = "0123456785",
+                            IsRating = true,
+                            QRImage = "https://via.placeholder.com/150",
+                            StartTime = new DateTime(2024, 1, 10, 8, 0, 0, 0, DateTimeKind.Utc),
+                            Status = "Completed",
+                            TotalPrice = 30000m,
+                            UnPaidMoney = 0m,
+                            UserId = 5,
+                            VehicleInforId = 1
+                        });
                 });
 
             modelBuilder.Entity("Parking.FindingSlotManagement.Domain.Entities.BookingDetails", b =>
@@ -179,6 +222,14 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                     b.HasIndex("TimeSlotId");
 
                     b.ToTable("BookingDetails");
+
+                    b.HasData(
+                        new
+                        {
+                            BookingDetailsId = 1,
+                            BookingId = 1,
+                            TimeSlotId = 1
+                        });
                 });
 
             modelBuilder.Entity("Parking.FindingSlotManagement.Domain.Entities.BusinessProfile", b =>
@@ -284,6 +335,16 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                     b.HasKey("ConflictRequestId");
 
                     b.ToTable("ConflictRequests");
+
+                    b.HasData(
+                        new
+                        {
+                            ConflictRequestId = 1,
+                            BookingId = 1,
+                            Message = "Tranh chấp về thời gian giữ chỗ",
+                            ParkingId = 1,
+                            Status = "Resolved"
+                        });
                 });
 
             modelBuilder.Entity("Parking.FindingSlotManagement.Domain.Entities.FavoriteAddress", b =>
@@ -311,6 +372,15 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                     b.HasIndex(new[] { "UserId" }, "IX_FavoriteAddress_UserID");
 
                     b.ToTable("FavoriteAddress", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            FavoriteAddressId = 1,
+                            Address = "01 Lê Lợi, Đà Nẵng",
+                            TagName = "Nhà",
+                            UserId = 5
+                        });
                 });
 
             modelBuilder.Entity("Parking.FindingSlotManagement.Domain.Entities.Fee", b =>
@@ -343,18 +413,18 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                         new
                         {
                             FeeId = 1,
-                            BusinessType = "Tư nhân",
-                            Name = "Cước phí mặc định tư nhân",
-                            NumberOfParking = "1",
-                            Price = 100000m
+                            BusinessType = "Cá nhân",
+                            Name = "Phí đăng ký cá nhân",
+                            NumberOfParking = "1-5",
+                            Price = 50000m
                         },
                         new
                         {
                             FeeId = 2,
-                            BusinessType = "Doanh nghiệp",
-                            Name = "Cước phí mặc định doanh nghiệp",
-                            NumberOfParking = "Unlimited",
-                            Price = 500000m
+                            BusinessType = "Doanh nghiệp nhỏ",
+                            Name = "Phí đăng ký doanh nghiệp nhỏ",
+                            NumberOfParking = "6-20",
+                            Price = 100000m
                         },
                         new
                         {
@@ -393,6 +463,14 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                     b.HasIndex("ApproveParkingId");
 
                     b.ToTable("FieldWorkParkingImgs");
+
+                    b.HasData(
+                        new
+                        {
+                            FieldWorkParkingImgId = 1,
+                            ApproveParkingId = 1,
+                            Url = "https://via.placeholder.com/400x300"
+                        });
                 });
 
             modelBuilder.Entity("Parking.FindingSlotManagement.Domain.Entities.Floor", b =>
@@ -702,7 +780,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             PenaltyPrice = 5000m,
                             PenaltyPriceStepTime = 15f,
                             StartingTime = 0,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -714,7 +792,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsWholeDay = true,
                             ParkingPriceName = "Giá xe ô tô - Ngày",
                             StartingTime = 0,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -729,7 +807,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             PenaltyPrice = 2000m,
                             PenaltyPriceStepTime = 15f,
                             StartingTime = 0,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -741,7 +819,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsWholeDay = true,
                             ParkingPriceName = "Giá xe máy - Ngày",
                             StartingTime = 0,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -756,7 +834,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             PenaltyPrice = 3000m,
                             PenaltyPriceStepTime = 15f,
                             StartingTime = 0,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -771,7 +849,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             PenaltyPrice = 1000m,
                             PenaltyPriceStepTime = 15f,
                             StartingTime = 0,
-                            TrafficId = 2
+                            TrafficId = 1
                         });
                 });
 
@@ -827,7 +905,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A01",
                             RowIndex = 1,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -838,7 +916,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A02",
                             RowIndex = 1,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -849,7 +927,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A03",
                             RowIndex = 1,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -860,7 +938,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A04",
                             RowIndex = 1,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -871,7 +949,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A05",
                             RowIndex = 1,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -882,7 +960,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A06",
                             RowIndex = 2,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -893,7 +971,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A07",
                             RowIndex = 2,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -904,7 +982,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A08",
                             RowIndex = 2,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -915,7 +993,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A09",
                             RowIndex = 2,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -926,7 +1004,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A10",
                             RowIndex = 2,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -937,7 +1015,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A11",
                             RowIndex = 3,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -948,7 +1026,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A12",
                             RowIndex = 3,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -959,7 +1037,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A13",
                             RowIndex = 3,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -970,7 +1048,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A14",
                             RowIndex = 3,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -981,7 +1059,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A15",
                             RowIndex = 3,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -992,7 +1070,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A16",
                             RowIndex = 4,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1003,7 +1081,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A17",
                             RowIndex = 4,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1014,7 +1092,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A18",
                             RowIndex = 4,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1025,7 +1103,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A19",
                             RowIndex = 4,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1036,7 +1114,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "A20",
                             RowIndex = 4,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1047,7 +1125,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B01",
                             RowIndex = 1,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1058,7 +1136,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B02",
                             RowIndex = 1,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1069,7 +1147,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B03",
                             RowIndex = 1,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1080,7 +1158,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B04",
                             RowIndex = 1,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1091,7 +1169,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B05",
                             RowIndex = 1,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1102,7 +1180,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B06",
                             RowIndex = 2,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1113,7 +1191,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B07",
                             RowIndex = 2,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1124,7 +1202,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B08",
                             RowIndex = 2,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1135,7 +1213,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B09",
                             RowIndex = 2,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1146,7 +1224,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B10",
                             RowIndex = 2,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1157,7 +1235,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B11",
                             RowIndex = 3,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1168,7 +1246,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B12",
                             RowIndex = 3,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1179,7 +1257,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B13",
                             RowIndex = 3,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1190,7 +1268,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B14",
                             RowIndex = 3,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1201,7 +1279,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B15",
                             RowIndex = 3,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1212,7 +1290,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B16",
                             RowIndex = 4,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1223,7 +1301,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B17",
                             RowIndex = 4,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1234,7 +1312,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B18",
                             RowIndex = 4,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1245,7 +1323,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B19",
                             RowIndex = 4,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1256,7 +1334,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "B20",
                             RowIndex = 4,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1267,7 +1345,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M01",
                             RowIndex = 1,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1278,7 +1356,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M02",
                             RowIndex = 1,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1289,7 +1367,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M03",
                             RowIndex = 1,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1300,7 +1378,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M04",
                             RowIndex = 1,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1311,7 +1389,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M05",
                             RowIndex = 1,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1322,7 +1400,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M06",
                             RowIndex = 1,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1333,7 +1411,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M07",
                             RowIndex = 1,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1344,7 +1422,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M08",
                             RowIndex = 1,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1355,7 +1433,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M09",
                             RowIndex = 1,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1366,7 +1444,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M10",
                             RowIndex = 1,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1377,7 +1455,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M11",
                             RowIndex = 2,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1388,7 +1466,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M12",
                             RowIndex = 2,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1399,7 +1477,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M13",
                             RowIndex = 2,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1410,7 +1488,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M14",
                             RowIndex = 2,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1421,7 +1499,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M15",
                             RowIndex = 2,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1432,7 +1510,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M16",
                             RowIndex = 2,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1443,7 +1521,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M17",
                             RowIndex = 2,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1454,7 +1532,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M18",
                             RowIndex = 2,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1465,7 +1543,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M19",
                             RowIndex = 2,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1476,7 +1554,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M20",
                             RowIndex = 2,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1487,7 +1565,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M21",
                             RowIndex = 3,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1498,7 +1576,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M22",
                             RowIndex = 3,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1509,7 +1587,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M23",
                             RowIndex = 3,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1520,7 +1598,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M24",
                             RowIndex = 3,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1531,7 +1609,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M25",
                             RowIndex = 3,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1542,7 +1620,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M26",
                             RowIndex = 3,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1553,7 +1631,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M27",
                             RowIndex = 3,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1564,7 +1642,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M28",
                             RowIndex = 3,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1575,7 +1653,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M29",
                             RowIndex = 3,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1586,7 +1664,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "M30",
                             RowIndex = 3,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1597,7 +1675,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "C01",
                             RowIndex = 1,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1608,7 +1686,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "C02",
                             RowIndex = 1,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1619,7 +1697,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "C03",
                             RowIndex = 1,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1630,7 +1708,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "C04",
                             RowIndex = 1,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1641,7 +1719,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "C05",
                             RowIndex = 1,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1652,7 +1730,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "C06",
                             RowIndex = 2,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1663,7 +1741,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "C07",
                             RowIndex = 2,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1674,7 +1752,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "C08",
                             RowIndex = 2,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1685,7 +1763,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "C09",
                             RowIndex = 2,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1696,7 +1774,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "C10",
                             RowIndex = 2,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1707,7 +1785,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "C11",
                             RowIndex = 3,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1718,7 +1796,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "C12",
                             RowIndex = 3,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1729,7 +1807,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "C13",
                             RowIndex = 3,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1740,7 +1818,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "C14",
                             RowIndex = 3,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1751,7 +1829,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "C15",
                             RowIndex = 3,
-                            TrafficId = 1
+                            TrafficId = 2
                         },
                         new
                         {
@@ -1762,7 +1840,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "D01",
                             RowIndex = 1,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1773,7 +1851,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "D02",
                             RowIndex = 1,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1784,7 +1862,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "D03",
                             RowIndex = 1,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1795,7 +1873,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "D04",
                             RowIndex = 1,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1806,7 +1884,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "D05",
                             RowIndex = 1,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1817,7 +1895,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "D06",
                             RowIndex = 2,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1828,7 +1906,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "D07",
                             RowIndex = 2,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1839,7 +1917,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "D08",
                             RowIndex = 2,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1850,7 +1928,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "D09",
                             RowIndex = 2,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1861,7 +1939,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "D10",
                             RowIndex = 2,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1872,7 +1950,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "D11",
                             RowIndex = 3,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1883,7 +1961,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "D12",
                             RowIndex = 3,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1894,7 +1972,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "D13",
                             RowIndex = 3,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1905,7 +1983,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "D14",
                             RowIndex = 3,
-                            TrafficId = 2
+                            TrafficId = 1
                         },
                         new
                         {
@@ -1916,7 +1994,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsBackup = false,
                             Name = "D15",
                             RowIndex = 3,
-                            TrafficId = 2
+                            TrafficId = 1
                         });
                 });
 
@@ -1942,6 +2020,20 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                     b.HasIndex(new[] { "ParkingId" }, "IX_ParkingSpotImage_ParkingID");
 
                     b.ToTable("ParkingSpotImage", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            ParkingSpotImageId = 1,
+                            ImgPath = "https://via.placeholder.com/600x400",
+                            ParkingId = 1
+                        },
+                        new
+                        {
+                            ParkingSpotImageId = 2,
+                            ImgPath = "https://via.placeholder.com/600x400",
+                            ParkingId = 2
+                        });
                 });
 
             modelBuilder.Entity("Parking.FindingSlotManagement.Domain.Entities.PayPal", b =>
@@ -1971,6 +2063,15 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                     b.HasIndex(new[] { "ManagerId" }, "IX_PayPal_ManagerID");
 
                     b.ToTable("PayPal", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            PayPalId = 1,
+                            ClientId = "sample-client-id",
+                            ManagerId = 2,
+                            SecretKey = "sample-secret"
+                        });
                 });
 
             modelBuilder.Entity("Parking.FindingSlotManagement.Domain.Entities.Role", b =>
@@ -2058,6 +2159,56 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                     b.HasIndex("ParkingPriceId");
 
                     b.ToTable("TimeLine", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            TimeLineId = 1,
+                            Description = "Giá giờ đầu cho ô tô",
+                            EndTime = new TimeSpan(0, 1, 0, 0, 0),
+                            ExtraFee = 0m,
+                            IsActive = true,
+                            Name = "Ô tô - Giờ đầu",
+                            ParkingPriceId = 1,
+                            Price = 15000m,
+                            StartTime = new TimeSpan(0, 0, 0, 0, 0)
+                        },
+                        new
+                        {
+                            TimeLineId = 2,
+                            Description = "Phụ phí mỗi 30 phút sau giờ đầu",
+                            EndTime = new TimeSpan(0, 23, 59, 59, 0),
+                            ExtraFee = 0m,
+                            IsActive = true,
+                            Name = "Ô tô - Mỗi 30 phút tiếp theo",
+                            ParkingPriceId = 1,
+                            Price = 5000m,
+                            StartTime = new TimeSpan(0, 1, 0, 0, 0)
+                        },
+                        new
+                        {
+                            TimeLineId = 3,
+                            Description = "Giá giờ đầu cho xe máy",
+                            EndTime = new TimeSpan(0, 1, 0, 0, 0),
+                            ExtraFee = 0m,
+                            IsActive = true,
+                            Name = "Xe máy - Giờ đầu",
+                            ParkingPriceId = 3,
+                            Price = 5000m,
+                            StartTime = new TimeSpan(0, 0, 0, 0, 0)
+                        },
+                        new
+                        {
+                            TimeLineId = 4,
+                            Description = "Phụ phí mỗi 30 phút sau giờ đầu",
+                            EndTime = new TimeSpan(0, 23, 59, 59, 0),
+                            ExtraFee = 0m,
+                            IsActive = true,
+                            Name = "Xe máy - Mỗi 30 phút tiếp theo",
+                            ParkingPriceId = 3,
+                            Price = 2000m,
+                            StartTime = new TimeSpan(0, 1, 0, 0, 0)
+                        });
                 });
 
             modelBuilder.Entity("Parking.FindingSlotManagement.Domain.Entities.TimeSlot", b =>
@@ -2094,7 +2245,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                         new
                         {
                             TimeSlotId = 1,
-                            CreatedDate = new DateTime(2025, 9, 22, 7, 37, 15, 879, DateTimeKind.Local).AddTicks(649),
+                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             EndTime = new DateTime(2024, 1, 1, 18, 0, 0, 0, DateTimeKind.Unspecified),
                             ParkingSlotId = 1,
                             StartTime = new DateTime(2024, 1, 1, 6, 0, 0, 0, DateTimeKind.Unspecified),
@@ -2103,7 +2254,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                         new
                         {
                             TimeSlotId = 2,
-                            CreatedDate = new DateTime(2025, 9, 22, 7, 37, 15, 879, DateTimeKind.Local).AddTicks(657),
+                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             EndTime = new DateTime(2024, 1, 2, 6, 0, 0, 0, DateTimeKind.Unspecified),
                             ParkingSlotId = 1,
                             StartTime = new DateTime(2024, 1, 1, 18, 0, 0, 0, DateTimeKind.Unspecified),
@@ -2135,13 +2286,13 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                         {
                             TrafficId = 1,
                             IsActive = true,
-                            Name = "Xe ô tô"
+                            Name = "Xe máy"
                         },
                         new
                         {
                             TrafficId = 2,
                             IsActive = true,
-                            Name = "Xe máy"
+                            Name = "Ô tô"
                         },
                         new
                         {
@@ -2187,6 +2338,19 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                     b.HasIndex("WalletId");
 
                     b.ToTable("Transaction", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            TransactionId = 1,
+                            BookingId = 1,
+                            CreatedDate = new DateTime(2024, 1, 10, 10, 2, 0, 0, DateTimeKind.Utc),
+                            Description = "Payment on checkout",
+                            PaymentMethod = "Cash",
+                            Price = 30000m,
+                            Status = "Success",
+                            WalletId = 5
+                        });
                 });
 
             modelBuilder.Entity("Parking.FindingSlotManagement.Domain.Entities.User", b =>
@@ -2294,8 +2458,8 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsActive = true,
                             IsCensorship = true,
                             Name = "Admin",
-                            PasswordHash = new byte[] { 50, 186, 174, 33, 172, 87, 8, 31, 32, 119, 13, 22, 229, 227, 254, 250, 63, 36, 146, 156, 57, 223, 8, 28, 57, 158, 229, 105, 177, 84, 145, 148, 126, 91, 205, 190, 159, 151, 28, 135, 98, 133, 137, 127, 137, 73, 121, 114, 21, 206, 172, 148, 53, 0, 69, 127, 71, 74, 3, 121, 85, 194, 30, 97 },
-                            PasswordSalt = new byte[] { 247, 31, 84, 65, 28, 145, 194, 0, 31, 239, 124, 50, 46, 189, 97, 57, 170, 246, 128, 85, 17, 141, 186, 54, 104, 193, 165, 109, 247, 215, 14, 225, 196, 93, 14, 57, 149, 32, 25, 248, 8, 7, 205, 93, 19, 219, 38, 216, 109, 110, 206, 52, 219, 83, 161, 202, 94, 241, 18, 240, 5, 179, 76, 109, 237, 2, 75, 72, 240, 22, 61, 239, 201, 179, 64, 63, 61, 154, 24, 237, 229, 213, 149, 7, 1, 167, 59, 119, 50, 203, 105, 73, 195, 14, 191, 139, 58, 143, 126, 128, 248, 251, 143, 85, 8, 236, 60, 71, 214, 16, 175, 108, 242, 101, 192, 176, 106, 237, 215, 209, 72, 170, 138, 86, 71, 205, 119, 73 },
+                            PasswordHash = new byte[] { 17, 72, 207, 34, 131, 134, 149, 214, 106, 59, 180, 129, 68, 17, 50, 198, 202, 157, 230, 112, 247, 5, 157, 38, 49, 6, 229, 167, 136, 44, 223, 252, 30, 26, 201, 88, 175, 169, 31, 69, 4, 183, 154, 17, 252, 187, 35, 229, 236, 55, 201, 219, 112, 246, 249, 7, 178, 118, 87, 135, 14, 40, 59, 89 },
+                            PasswordSalt = new byte[] { 2, 67, 113, 205, 13, 120, 198, 181, 35, 250, 246, 139, 46, 165, 99, 213, 240, 227, 240, 89, 160, 232, 79, 177, 124, 154, 180, 72, 134, 193, 144, 108, 167, 103, 100, 43, 205, 156, 155, 228, 203, 190, 3, 178, 229, 147, 228, 85, 179, 72, 135, 44, 18, 34, 97, 57, 131, 172, 231, 188, 164, 239, 213, 205, 185, 123, 247, 23, 184, 74, 15, 160, 189, 201, 1, 215, 163, 148, 204, 235, 40, 64, 119, 16, 160, 38, 213, 187, 180, 32, 68, 229, 140, 234, 97, 20, 170, 119, 255, 142, 61, 73, 227, 112, 116, 10, 153, 33, 213, 46, 179, 21, 167, 117, 130, 59, 206, 176, 213, 146, 123, 124, 184, 233, 162, 142, 112, 12 },
                             Phone = "0123456789",
                             RoleId = 1
                         },
@@ -2310,8 +2474,8 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsActive = true,
                             IsCensorship = true,
                             Name = "Nguyễn Văn A",
-                            PasswordHash = new byte[] { 50, 186, 174, 33, 172, 87, 8, 31, 32, 119, 13, 22, 229, 227, 254, 250, 63, 36, 146, 156, 57, 223, 8, 28, 57, 158, 229, 105, 177, 84, 145, 148, 126, 91, 205, 190, 159, 151, 28, 135, 98, 133, 137, 127, 137, 73, 121, 114, 21, 206, 172, 148, 53, 0, 69, 127, 71, 74, 3, 121, 85, 194, 30, 97 },
-                            PasswordSalt = new byte[] { 247, 31, 84, 65, 28, 145, 194, 0, 31, 239, 124, 50, 46, 189, 97, 57, 170, 246, 128, 85, 17, 141, 186, 54, 104, 193, 165, 109, 247, 215, 14, 225, 196, 93, 14, 57, 149, 32, 25, 248, 8, 7, 205, 93, 19, 219, 38, 216, 109, 110, 206, 52, 219, 83, 161, 202, 94, 241, 18, 240, 5, 179, 76, 109, 237, 2, 75, 72, 240, 22, 61, 239, 201, 179, 64, 63, 61, 154, 24, 237, 229, 213, 149, 7, 1, 167, 59, 119, 50, 203, 105, 73, 195, 14, 191, 139, 58, 143, 126, 128, 248, 251, 143, 85, 8, 236, 60, 71, 214, 16, 175, 108, 242, 101, 192, 176, 106, 237, 215, 209, 72, 170, 138, 86, 71, 205, 119, 73 },
+                            PasswordHash = new byte[] { 17, 72, 207, 34, 131, 134, 149, 214, 106, 59, 180, 129, 68, 17, 50, 198, 202, 157, 230, 112, 247, 5, 157, 38, 49, 6, 229, 167, 136, 44, 223, 252, 30, 26, 201, 88, 175, 169, 31, 69, 4, 183, 154, 17, 252, 187, 35, 229, 236, 55, 201, 219, 112, 246, 249, 7, 178, 118, 87, 135, 14, 40, 59, 89 },
+                            PasswordSalt = new byte[] { 2, 67, 113, 205, 13, 120, 198, 181, 35, 250, 246, 139, 46, 165, 99, 213, 240, 227, 240, 89, 160, 232, 79, 177, 124, 154, 180, 72, 134, 193, 144, 108, 167, 103, 100, 43, 205, 156, 155, 228, 203, 190, 3, 178, 229, 147, 228, 85, 179, 72, 135, 44, 18, 34, 97, 57, 131, 172, 231, 188, 164, 239, 213, 205, 185, 123, 247, 23, 184, 74, 15, 160, 189, 201, 1, 215, 163, 148, 204, 235, 40, 64, 119, 16, 160, 38, 213, 187, 180, 32, 68, 229, 140, 234, 97, 20, 170, 119, 255, 142, 61, 73, 227, 112, 116, 10, 153, 33, 213, 46, 179, 21, 167, 117, 130, 59, 206, 176, 213, 146, 123, 124, 184, 233, 162, 142, 112, 12 },
                             Phone = "0123456788",
                             RoleId = 1
                         },
@@ -2327,8 +2491,8 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsCensorship = true,
                             ManagerId = 2,
                             Name = "Trần Thị B",
-                            PasswordHash = new byte[] { 50, 186, 174, 33, 172, 87, 8, 31, 32, 119, 13, 22, 229, 227, 254, 250, 63, 36, 146, 156, 57, 223, 8, 28, 57, 158, 229, 105, 177, 84, 145, 148, 126, 91, 205, 190, 159, 151, 28, 135, 98, 133, 137, 127, 137, 73, 121, 114, 21, 206, 172, 148, 53, 0, 69, 127, 71, 74, 3, 121, 85, 194, 30, 97 },
-                            PasswordSalt = new byte[] { 247, 31, 84, 65, 28, 145, 194, 0, 31, 239, 124, 50, 46, 189, 97, 57, 170, 246, 128, 85, 17, 141, 186, 54, 104, 193, 165, 109, 247, 215, 14, 225, 196, 93, 14, 57, 149, 32, 25, 248, 8, 7, 205, 93, 19, 219, 38, 216, 109, 110, 206, 52, 219, 83, 161, 202, 94, 241, 18, 240, 5, 179, 76, 109, 237, 2, 75, 72, 240, 22, 61, 239, 201, 179, 64, 63, 61, 154, 24, 237, 229, 213, 149, 7, 1, 167, 59, 119, 50, 203, 105, 73, 195, 14, 191, 139, 58, 143, 126, 128, 248, 251, 143, 85, 8, 236, 60, 71, 214, 16, 175, 108, 242, 101, 192, 176, 106, 237, 215, 209, 72, 170, 138, 86, 71, 205, 119, 73 },
+                            PasswordHash = new byte[] { 17, 72, 207, 34, 131, 134, 149, 214, 106, 59, 180, 129, 68, 17, 50, 198, 202, 157, 230, 112, 247, 5, 157, 38, 49, 6, 229, 167, 136, 44, 223, 252, 30, 26, 201, 88, 175, 169, 31, 69, 4, 183, 154, 17, 252, 187, 35, 229, 236, 55, 201, 219, 112, 246, 249, 7, 178, 118, 87, 135, 14, 40, 59, 89 },
+                            PasswordSalt = new byte[] { 2, 67, 113, 205, 13, 120, 198, 181, 35, 250, 246, 139, 46, 165, 99, 213, 240, 227, 240, 89, 160, 232, 79, 177, 124, 154, 180, 72, 134, 193, 144, 108, 167, 103, 100, 43, 205, 156, 155, 228, 203, 190, 3, 178, 229, 147, 228, 85, 179, 72, 135, 44, 18, 34, 97, 57, 131, 172, 231, 188, 164, 239, 213, 205, 185, 123, 247, 23, 184, 74, 15, 160, 189, 201, 1, 215, 163, 148, 204, 235, 40, 64, 119, 16, 160, 38, 213, 187, 180, 32, 68, 229, 140, 234, 97, 20, 170, 119, 255, 142, 61, 73, 227, 112, 116, 10, 153, 33, 213, 46, 179, 21, 167, 117, 130, 59, 206, 176, 213, 146, 123, 124, 184, 233, 162, 142, 112, 12 },
                             Phone = "0123456787",
                             RoleId = 4
                         },
@@ -2344,8 +2508,8 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsCensorship = true,
                             ManagerId = 2,
                             Name = "Lê Văn C",
-                            PasswordHash = new byte[] { 50, 186, 174, 33, 172, 87, 8, 31, 32, 119, 13, 22, 229, 227, 254, 250, 63, 36, 146, 156, 57, 223, 8, 28, 57, 158, 229, 105, 177, 84, 145, 148, 126, 91, 205, 190, 159, 151, 28, 135, 98, 133, 137, 127, 137, 73, 121, 114, 21, 206, 172, 148, 53, 0, 69, 127, 71, 74, 3, 121, 85, 194, 30, 97 },
-                            PasswordSalt = new byte[] { 247, 31, 84, 65, 28, 145, 194, 0, 31, 239, 124, 50, 46, 189, 97, 57, 170, 246, 128, 85, 17, 141, 186, 54, 104, 193, 165, 109, 247, 215, 14, 225, 196, 93, 14, 57, 149, 32, 25, 248, 8, 7, 205, 93, 19, 219, 38, 216, 109, 110, 206, 52, 219, 83, 161, 202, 94, 241, 18, 240, 5, 179, 76, 109, 237, 2, 75, 72, 240, 22, 61, 239, 201, 179, 64, 63, 61, 154, 24, 237, 229, 213, 149, 7, 1, 167, 59, 119, 50, 203, 105, 73, 195, 14, 191, 139, 58, 143, 126, 128, 248, 251, 143, 85, 8, 236, 60, 71, 214, 16, 175, 108, 242, 101, 192, 176, 106, 237, 215, 209, 72, 170, 138, 86, 71, 205, 119, 73 },
+                            PasswordHash = new byte[] { 17, 72, 207, 34, 131, 134, 149, 214, 106, 59, 180, 129, 68, 17, 50, 198, 202, 157, 230, 112, 247, 5, 157, 38, 49, 6, 229, 167, 136, 44, 223, 252, 30, 26, 201, 88, 175, 169, 31, 69, 4, 183, 154, 17, 252, 187, 35, 229, 236, 55, 201, 219, 112, 246, 249, 7, 178, 118, 87, 135, 14, 40, 59, 89 },
+                            PasswordSalt = new byte[] { 2, 67, 113, 205, 13, 120, 198, 181, 35, 250, 246, 139, 46, 165, 99, 213, 240, 227, 240, 89, 160, 232, 79, 177, 124, 154, 180, 72, 134, 193, 144, 108, 167, 103, 100, 43, 205, 156, 155, 228, 203, 190, 3, 178, 229, 147, 228, 85, 179, 72, 135, 44, 18, 34, 97, 57, 131, 172, 231, 188, 164, 239, 213, 205, 185, 123, 247, 23, 184, 74, 15, 160, 189, 201, 1, 215, 163, 148, 204, 235, 40, 64, 119, 16, 160, 38, 213, 187, 180, 32, 68, 229, 140, 234, 97, 20, 170, 119, 255, 142, 61, 73, 227, 112, 116, 10, 153, 33, 213, 46, 179, 21, 167, 117, 130, 59, 206, 176, 213, 146, 123, 124, 184, 233, 162, 142, 112, 12 },
                             Phone = "0123456786",
                             RoleId = 2
                         },
@@ -2360,8 +2524,8 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             IsActive = true,
                             IsCensorship = true,
                             Name = "Phạm Thị D",
-                            PasswordHash = new byte[] { 50, 186, 174, 33, 172, 87, 8, 31, 32, 119, 13, 22, 229, 227, 254, 250, 63, 36, 146, 156, 57, 223, 8, 28, 57, 158, 229, 105, 177, 84, 145, 148, 126, 91, 205, 190, 159, 151, 28, 135, 98, 133, 137, 127, 137, 73, 121, 114, 21, 206, 172, 148, 53, 0, 69, 127, 71, 74, 3, 121, 85, 194, 30, 97 },
-                            PasswordSalt = new byte[] { 247, 31, 84, 65, 28, 145, 194, 0, 31, 239, 124, 50, 46, 189, 97, 57, 170, 246, 128, 85, 17, 141, 186, 54, 104, 193, 165, 109, 247, 215, 14, 225, 196, 93, 14, 57, 149, 32, 25, 248, 8, 7, 205, 93, 19, 219, 38, 216, 109, 110, 206, 52, 219, 83, 161, 202, 94, 241, 18, 240, 5, 179, 76, 109, 237, 2, 75, 72, 240, 22, 61, 239, 201, 179, 64, 63, 61, 154, 24, 237, 229, 213, 149, 7, 1, 167, 59, 119, 50, 203, 105, 73, 195, 14, 191, 139, 58, 143, 126, 128, 248, 251, 143, 85, 8, 236, 60, 71, 214, 16, 175, 108, 242, 101, 192, 176, 106, 237, 215, 209, 72, 170, 138, 86, 71, 205, 119, 73 },
+                            PasswordHash = new byte[] { 17, 72, 207, 34, 131, 134, 149, 214, 106, 59, 180, 129, 68, 17, 50, 198, 202, 157, 230, 112, 247, 5, 157, 38, 49, 6, 229, 167, 136, 44, 223, 252, 30, 26, 201, 88, 175, 169, 31, 69, 4, 183, 154, 17, 252, 187, 35, 229, 236, 55, 201, 219, 112, 246, 249, 7, 178, 118, 87, 135, 14, 40, 59, 89 },
+                            PasswordSalt = new byte[] { 2, 67, 113, 205, 13, 120, 198, 181, 35, 250, 246, 139, 46, 165, 99, 213, 240, 227, 240, 89, 160, 232, 79, 177, 124, 154, 180, 72, 134, 193, 144, 108, 167, 103, 100, 43, 205, 156, 155, 228, 203, 190, 3, 178, 229, 147, 228, 85, 179, 72, 135, 44, 18, 34, 97, 57, 131, 172, 231, 188, 164, 239, 213, 205, 185, 123, 247, 23, 184, 74, 15, 160, 189, 201, 1, 215, 163, 148, 204, 235, 40, 64, 119, 16, 160, 38, 213, 187, 180, 32, 68, 229, 140, 234, 97, 20, 170, 119, 255, 142, 61, 73, 227, 112, 116, 10, 153, 33, 213, 46, 179, 21, 167, 117, 130, 59, 206, 176, 213, 146, 123, 124, 184, 233, 162, 142, 112, 12 },
                             Phone = "0123456785",
                             RoleId = 3
                         });
@@ -2409,7 +2573,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             VehicleInforId = 1,
                             Color = "Đỏ",
                             LicensePlate = "29A1-12345",
-                            TrafficId = 2,
+                            TrafficId = 1,
                             UserId = 5,
                             VehicleName = "Honda Wave RSX"
                         },
@@ -2418,7 +2582,7 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                             VehicleInforId = 2,
                             Color = "Trắng",
                             LicensePlate = "30A1-67890",
-                            TrafficId = 1,
+                            TrafficId = 2,
                             UserId = 5,
                             VehicleName = "Toyota Vios"
                         });
@@ -2451,6 +2615,15 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                     b.HasIndex(new[] { "UserId" }, "IX_userId_VnPay");
 
                     b.ToTable("VnPay", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            VnPayId = 1,
+                            HashSecret = "HASHSECRET456",
+                            TmnCode = "TMNCODE123",
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("Parking.FindingSlotManagement.Domain.Entities.Wallet", b =>
@@ -2482,8 +2655,9 @@ namespace Parking.FindingSlotManagement.Infrastructure.Migrations
                         new
                         {
                             WalletId = 1,
-                            Balance = 0m,
-                            Debt = 0m
+                            Balance = 1000000m,
+                            Debt = 0m,
+                            UserId = 1
                         },
                         new
                         {

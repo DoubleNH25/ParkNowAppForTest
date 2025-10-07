@@ -73,7 +73,6 @@ namespace Parking.FindingSlotManagement.Infrastructure
 
             services.AddScoped<IFireBaseMessageServices, FireBaseMessageServices>();
             services.AddScoped<IVnPayService, VnPayService>();
-            services.AddScoped<SeedDataService>();
             return services;
         }
     }

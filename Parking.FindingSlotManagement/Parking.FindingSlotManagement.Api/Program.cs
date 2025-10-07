@@ -1,4 +1,4 @@
-﻿using Hangfire;
+using Hangfire;
 using Hangfire.SqlServer;
 using HangfireBasicAuthenticationFilter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -127,8 +127,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Seed database
-await app.Services.SeedDatabaseAsync();
+// Seeding is handled via EF Core migrations (HasData). Do not run runtime seeding here.
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
