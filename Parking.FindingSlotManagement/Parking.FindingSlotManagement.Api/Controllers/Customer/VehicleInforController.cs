@@ -1,9 +1,10 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Parking.FindingSlotManagement.Application;
+using Parking.FindingSlotManagement.Api.Extensions;
 using Parking.FindingSlotManagement.Application.Features.Customer.VehicleInfo.VehicleInfoManagement.Commands.CreateNewVehicleInfo;
 using Parking.FindingSlotManagement.Application.Features.Customer.VehicleInfo.VehicleInfoManagement.Commands.DeleteVehicleInfor;
 using Parking.FindingSlotManagement.Application.Features.Customer.VehicleInfo.VehicleInfoManagement.Commands.UpdateVehicleInfo;
@@ -16,7 +17,6 @@ namespace Parking.FindingSlotManagement.Api.Controllers.Customer
 {
     [Authorize(Roles = "Customer")]
     [Route("api/vehicle-infor")]
-    [ApiController]
     public class VehicleInforController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -151,14 +151,15 @@ namespace Parking.FindingSlotManagement.Api.Controllers.Customer
         /// <summary>
         /// API For Customer
         /// </summary>
-        [HttpGet("/user/{userId}/vehicle-infor", Name = "GetListVehicleInforByUserId")]
+        [HttpGet("/user/vehicle-infor", Name = "GetListVehicleInforByUserId")]
         [Produces("application/json")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult<ServiceResponse<IEnumerable<GetListVehicleInforByUserIdResponse>>>> GetListVehicleInforByUserId(int userId, [FromQuery] int pageNo, [FromQuery] int pageSize)
+        public async Task<ActionResult<ServiceResponse<IEnumerable<GetListVehicleInforByUserIdResponse>>>> GetListVehicleInforByUserId([FromQuery] int pageNo, [FromQuery] int pageSize)
         {
             try
             {
+                var userId = HttpContext.GetUserId();
                 var query = new GetListVehicleInforByUserIdQuery() { UserId = userId, PageNo = pageNo, PageSize = pageSize };
                 var res = await _mediator.Send(query);
 

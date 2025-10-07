@@ -1,9 +1,10 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Parking.FindingSlotManagement.Application;
+using Parking.FindingSlotManagement.Api.Extensions;
 using Parking.FindingSlotManagement.Application.Features.Customer.FavoriteAddress.FavoriteAddressManagement.Commands.CreateNewFavoriteAddress;
 using Parking.FindingSlotManagement.Application.Features.Customer.FavoriteAddress.FavoriteAddressManagement.Commands.DeleteFavoriteAddress;
 using Parking.FindingSlotManagement.Application.Features.Customer.FavoriteAddress.FavoriteAddressManagement.Commands.UpdateFavoriteAddress;
@@ -151,14 +152,15 @@ namespace Parking.FindingSlotManagement.Api.Controllers.Customer
         /// <summary>
         /// API For Customer
         /// </summary>
-        [HttpGet("/user/{userId}/favorite-address", Name = "GetFavoriteAddressByUserId")]
+        [HttpGet("/user/favorite-address", Name = "GetFavoriteAddressByUserId")]
         [Produces("application/json")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult<ServiceResponse<IEnumerable<GetFavoriteAddressByUserIdResponse>>>> GetFavoriteAddressByUserId(int userId, [FromQuery]int pageNo, [FromQuery]int pageSize)
+        public async Task<ActionResult<ServiceResponse<IEnumerable<GetFavoriteAddressByUserIdResponse>>>> GetFavoriteAddressByUserId([FromQuery]int pageNo, [FromQuery]int pageSize)
         {
             try
             {
+                var userId = HttpContext.GetUserId();
                 var query = new GetFavoriteAddressByUserIdQuery() { UserId = userId, PageNo = pageNo, PageSize = pageSize };
                 var res = await _mediator.Send(query);
 

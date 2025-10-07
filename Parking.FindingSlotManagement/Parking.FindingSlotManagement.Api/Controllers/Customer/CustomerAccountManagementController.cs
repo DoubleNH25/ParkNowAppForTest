@@ -1,8 +1,9 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Parking.FindingSlotManagement.Application;
+using Parking.FindingSlotManagement.Api.Extensions;
 using Parking.FindingSlotManagement.Application.Features.Customer.Account.AccountManagement.Commands.UpdateCustomerProfileById;
 using Parking.FindingSlotManagement.Application.Features.Customer.Account.AccountManagement.Queries.GetBanCountByUserId;
 using Parking.FindingSlotManagement.Application.Features.Customer.Account.AccountManagement.Queries.GetCustomerProfileById;
@@ -12,7 +13,6 @@ namespace Parking.FindingSlotManagement.Api.Controllers.Customer
 {
     [Authorize(Roles = "Customer")]
     [Route("api/mobile")]
-    [ApiController]
     public class CustomerAccountManagementController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -24,14 +24,15 @@ namespace Parking.FindingSlotManagement.Api.Controllers.Customer
         /// <summary>
         /// API For Customer
         /// </summary>
-        [HttpGet("account/{userId}", Name = "GetCustomerProfileById")]
+        [HttpGet("account", Name = "GetCustomerProfileById")]
         [Produces("application/json")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult<ServiceResponse<GetCustomerProfileByIdResponse>>> GetCustomerProfileById(int userId)
+        public async Task<ActionResult<ServiceResponse<GetCustomerProfileByIdResponse>>> GetCustomerProfileById()
         {
             try
             {
+                var userId = HttpContext.GetUserId();
                 var query = new GetCustomerProfileByIdQuery() { UserId = userId };
                 var res = await _mediator.Send(query);
 
@@ -47,14 +48,15 @@ namespace Parking.FindingSlotManagement.Api.Controllers.Customer
         /// <summary>
         /// API For Customer
         /// </summary>
-        [HttpGet("account/ban-count/{userId}", Name = "GetBanCountByUserId")]
+        [HttpGet("account/ban-count", Name = "GetBanCountByUserId")]
         [Produces("application/json")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult<ServiceResponse<GetBanCountByUserIdResponse>>> GetBanCountByUserId(int userId)
+        public async Task<ActionResult<ServiceResponse<GetBanCountByUserIdResponse>>> GetBanCountByUserId()
         {
             try
             {
+                var userId = HttpContext.GetUserId();
                 var query = new GetBanCountByUserIdQuery() { UserId = userId };
                 var res = await _mediator.Send(query);
 
@@ -70,11 +72,11 @@ namespace Parking.FindingSlotManagement.Api.Controllers.Customer
         /// <summary>
         /// API For Customer
         /// </summary>
-        [HttpPut("account/{userId}", Name = "UpdateCustomerProfileById")]
+        [HttpPut("account", Name = "UpdateCustomerProfileById")]
         [Produces("application/json")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<ServiceResponse<string>>> UpdateCustomerProfileById(int userId, [FromBody] UpdateCustomerProfileByIdCommand command)
+        public async Task<ActionResult<ServiceResponse<string>>> UpdateCustomerProfileById([FromBody] UpdateCustomerProfileByIdCommand command)
         {
             try
             {

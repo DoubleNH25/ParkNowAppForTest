@@ -1,8 +1,9 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Parking.FindingSlotManagement.Application;
+using Parking.FindingSlotManagement.Api.Extensions;
 using Parking.FindingSlotManagement.Application.Features.Admin.Paypal.PaypalManagement.Queries.GetPaypalByManagerId;
 using Parking.FindingSlotManagement.Application.Features.Customer.Booking.Commands.CaculateTotalPriceAfterSelectSlot;
 using Parking.FindingSlotManagement.Application.Features.Customer.Booking.Commands.CancelBooking;
@@ -43,14 +44,16 @@ namespace Parking.FindingSlotManagement.Api.Controllers.Customer
         /// </summary>
         /// 
         [Authorize(Roles = "Customer")]
-        [HttpGet("upcomming/{userId}", Name = "GetUpcommingBookingByUserId")]
+        [HttpGet("upcomming", Name = "GetUpcommingBookingByUserId")]
         [Produces("application/json")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult<ServiceResponse<IEnumerable<GetUpcommingBookingResponse>>>> GetUpcommingBookingByUserId(int userId)
+        public async Task<ActionResult<ServiceResponse<IEnumerable<GetUpcommingBookingResponse>>>> GetUpcommingBookingByUserId()
         {
             try
             {
+                // Always trust the token for user id
+                var userId = HttpContext.GetUserId();
                 var query = new GetUpcommingBookingQuery() { UserId = userId };
                 var res = await _mediator.Send(query);
                 if (res.Message != "Thành công")
@@ -70,14 +73,16 @@ namespace Parking.FindingSlotManagement.Api.Controllers.Customer
         /// </summary>
         /// 
         [Authorize(Roles = "Customer")]
-        [HttpGet("activities/{userId}", Name = "GetCustomerActivitiesByUserId")]
+        [HttpGet("activities", Name = "GetCustomerActivitiesByUserId")]
         [Produces("application/json")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult<ServiceResponse<IEnumerable<GetCustomerActivitiesResponse>>>> GetCustomerActivitiesByUserId(int userId)
+        public async Task<ActionResult<ServiceResponse<IEnumerable<GetCustomerActivitiesResponse>>>> GetCustomerActivitiesByUserId()
         {
             try
             {
+                // Always trust the token for user id
+                var userId = HttpContext.GetUserId();
                 var query = new GetCustomerActivitiesQuery() { UserId = userId };
                 var res = await _mediator.Send(query);
                 if (res.Message != "Thành công")

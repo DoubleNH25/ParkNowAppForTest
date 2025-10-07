@@ -1,8 +1,9 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Parking.FindingSlotManagement.Application;
+using Parking.FindingSlotManagement.Api.Extensions;
 using Parking.FindingSlotManagement.Application.Features.Admin.Paypal.PaypalManagement.Queries.GetPaypalByManagerId;
 using Parking.FindingSlotManagement.Application.Features.Customer.Wallet.Queries.GetWalletByUserId;
 using System.Net;
@@ -24,14 +25,15 @@ namespace Parking.FindingSlotManagement.Api.Controllers.Customer
         /// </summary>
         /// 
         [Authorize(Roles = "Customer,Manager")]
-        [HttpGet("{userId}", Name = "GetWalletByUserId")]
+        [HttpGet(Name = "GetWalletByUserId")]
         [Produces("application/json")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult<ServiceResponse<GetWalletByUserIdResponse>>> GetWalletByUserId(int userId)
+        public async Task<ActionResult<ServiceResponse<GetWalletByUserIdResponse>>> GetWalletByUserId()
         {
             try
             {
+                var userId = HttpContext.GetUserId();
                 var query = new GetWalletByUserIdQuery() { UserId = userId };
                 var res = await _mediator.Send(query);
                 if (res.Message != "Thành công")
