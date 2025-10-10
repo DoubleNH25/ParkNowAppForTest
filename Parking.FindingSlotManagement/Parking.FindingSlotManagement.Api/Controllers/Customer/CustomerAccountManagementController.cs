@@ -80,6 +80,12 @@ namespace Parking.FindingSlotManagement.Api.Controllers.Customer
         {
             try
             {
+                var userId = HttpContext.GetUserId();
+                
+                if (command.UserId == 0 || command.UserId == null)
+                {
+                    command.UserId = userId;
+                }
                 var res = await _mediator.Send(command);
                 if (res.Message != "Thành công")
                 {
