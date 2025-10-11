@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Parking.FindingSlotManagement.Application;
 using Parking.FindingSlotManagement.Api.Extensions;
 using Parking.FindingSlotManagement.Application.Features.Customer.Account.AccountManagement.Commands.UpdateCustomerProfileById;
+using Parking.FindingSlotManagement.Application.Features.Customer.Account.AccountManagement.Commands.ChangeCustomerPassword;
 using Parking.FindingSlotManagement.Application.Features.Customer.Account.AccountManagement.Queries.GetBanCountByUserId;
 using Parking.FindingSlotManagement.Application.Features.Customer.Account.AccountManagement.Queries.GetCustomerProfileById;
 using System.Net;
@@ -96,6 +97,56 @@ namespace Parking.FindingSlotManagement.Api.Controllers.Customer
             catch (Exception ex)
             {
 
+                IEnumerable<string> list1 = new List<string> { "Severity: Error" };
+                string message = "";
+                foreach (var item in list1)
+                {
+                    message = ex.Message.Replace(item, string.Empty);
+                }
+                var errorResponse = new ErrorResponseModel(ResponseCode.BadRequest, "Validation Error: " + message.Remove(0, 31));
+                return StatusCode((int)ResponseCode.BadRequest, errorResponse);
+            }
+        }
+
+        /// <summary>
+        /// API For Customer to change password
+        /// </summary>
+        [HttpPut("account/change-password", Name = "ChangeCustomerPassword")]
+        [Produces("application/json")]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<ActionResult<ServiceResponse<string>>> ChangeCustomerPassword([FromBody] ChangeCustomerPasswordCommand command)
+        {
+            try
+            {
+                var userId = HttpContext.GetUserId();
+                
+                if (command.UserId == 0 || command.UserId == null)
+                {
+                    command.UserId = userId;
+                }
+                
+                // Ensure user can only change their own password
+                if (command.UserId != userId)
+                {
+                    return StatusCode(403, new ServiceResponse<string>
+                    {
+                        Message = "Bạn chỉ có thể thay đổi mật khẩu của chính mình.",
+                        StatusCode = 403,
+                        Success = false
+                    });
+                }
+
+                var res = await _mediator.Send(command);
+                if (res.Message != "Thành công")
+                {
+                    return StatusCode((int)res.StatusCode, res);
+                }
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
                 IEnumerable<string> list1 = new List<string> { "Severity: Error" };
                 string message = "";
                 foreach (var item in list1)

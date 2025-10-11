@@ -1,4 +1,4 @@
-﻿using Moq;
+using Moq;
 using Parking.FindingSlotManagement.Application.Contracts.Persistence;
 using Parking.FindingSlotManagement.Application.Features.Admin.Fee.Queries.GetFeeById;
 using Parking.FindingSlotManagement.Application.Features.Customer.Account.AccountManagement.Queries.GetCustomerProfileById;
@@ -41,7 +41,17 @@ namespace Parking.FindingSlotManagement.Application.UnitTests.HandlerTesting.Cus
         {
             // Arrange
             var request = new GetCustomerProfileByIdQuery { UserId = 1 };
-            var user = new Domain.Entities.User { UserId = 1, Name = "uuuuu" };
+            var user = new Domain.Entities.User 
+            { 
+                UserId = 1, 
+                Name = "Test User",
+                Email = "test@example.com",
+                Phone = "0123456789",
+                Avatar = "avatar_url",
+                DateOfBirth = new DateTime(1990, 1, 1),
+                Gender = "Nam",
+                Address = "123 Test Street"
+            };
 
             _userRepositoryMock.Setup(x => x.GetById(1)).ReturnsAsync(user);
 
@@ -54,6 +64,10 @@ namespace Parking.FindingSlotManagement.Application.UnitTests.HandlerTesting.Cus
             response.StatusCode.ShouldBe(200);
             response.Message.ShouldBe("Thành công");
             response.Data.ShouldNotBeNull();
+            response.Data.UserId.ShouldBe(1);
+            response.Data.Name.ShouldBe("Test User");
+            response.Data.Email.ShouldBe("test@example.com");
+            response.Data.Phone.ShouldBe("0123456789");
         }
     }
 }
