@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Parking.FindingSlotManagement.Application.Contracts.Persistence;
 using System;
 using System.Collections.Generic;
@@ -26,19 +26,23 @@ namespace Parking.FindingSlotManagement.Application.Features.Customer.Account.Ac
                     return new ServiceResponse<string>
                     {
                         Message = "Không tìm thấy tài khoản.",
-                        StatusCode = 200,
-                        Success = true
+                        StatusCode = 404,
+                        Success = false
                     };
                 }
                 if(!string.IsNullOrEmpty(request.Name))
                 {
                     checkUserExist.Name = request.Name;
                 }
+                if(!string.IsNullOrEmpty(request.Email))
+                {
+                    checkUserExist.Email = request.Email;
+                }
                 if(!string.IsNullOrEmpty(request.Avatar))
                 {
                     checkUserExist.Avatar = request.Avatar;
                 }
-                if (!string.IsNullOrEmpty(request.DateOfBirth.ToString()))
+                if (request.DateOfBirth.HasValue)
                 {
                     checkUserExist.DateOfBirth = request.DateOfBirth;
                 }

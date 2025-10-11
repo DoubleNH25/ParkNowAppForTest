@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +10,6 @@ namespace Parking.FindingSlotManagement.Application.Features.Customer.Authentica
     public class CustomerLoginQuery : IRequest<ServiceResponse<string>>
     {
         public string Phone { get; set; }
+        public string Password { get; set; }
     }
 }

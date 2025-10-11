@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Parking.FindingSlotManagement.Application.Contracts.Persistence;
@@ -51,6 +51,17 @@ namespace Parking.FindingSlotManagement.Application.Features.Customer.Authentica
                         Success = false
                     };
                 }
+
+                // Verify password
+                if (!VerifyPasswordHash(request.Password, checkAccountExist.PasswordHash, checkAccountExist.PasswordSalt))
+                {
+                    return new ServiceResponse<string>
+                    {
+                        Message = "Mật khẩu không đúng.",
+                        StatusCode = 400,
+                        Success = false
+                    };
+                }
                 if (checkAccountExist.RoleId == 3 && checkAccountExist.IsActive == true)
                 {
                     TokenManage token = new TokenManage(_jwtSettings, _configuration);
@@ -77,6 +88,15 @@ namespace Parking.FindingSlotManagement.Application.Features.Customer.Authentica
             {
 
                 throw new Exception(ex.Message);
+            }
+        }
+
+        private bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
+            {
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                return computedHash.SequenceEqual(storedHash);
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +11,13 @@ namespace Parking.FindingSlotManagement.Application.Features.Customer.Authentica
     {
         public CustomerLoginValidation()
         {
-            RuleFor(p => p.Phone)
-                .NotEmpty().WithMessage("Vui lòng nhập {Phone}.")
-                .NotNull()
-                .Must(x => int.TryParse(x, out _)).WithMessage("{Phone} là chữ số.")
-                .Length(10).WithMessage("{Phone} cần phải nhập 10 chữ số.");
+            RuleFor(x => x.Phone)
+                .NotEmpty().WithMessage("Phone is required")
+                .NotNull().WithMessage("Phone is required");
+
+            RuleFor(x => x.Password)
+                .NotEmpty().WithMessage("Password is required")
+                .NotNull().WithMessage("Password is required");
         }
     }
 }

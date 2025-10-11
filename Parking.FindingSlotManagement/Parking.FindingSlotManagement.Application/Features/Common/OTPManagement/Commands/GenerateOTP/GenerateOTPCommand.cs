@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +10,7 @@ namespace Parking.FindingSlotManagement.Application.Features.Common.OTPManagemen
     public class GenerateOTPCommand : IRequest<ServiceResponse<string>>
     {
         public string Email { get; set; }
+        public string? PhoneNumber { get; set; }
+        public bool IsForRegistration { get; set; } = false;
     }
 }

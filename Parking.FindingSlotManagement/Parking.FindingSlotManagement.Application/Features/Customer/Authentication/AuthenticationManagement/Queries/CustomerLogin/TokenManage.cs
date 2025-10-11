@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Parking.FindingSlotManagement.Application.Models;
 using Parking.FindingSlotManagement.Domain.Entities;

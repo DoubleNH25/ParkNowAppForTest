@@ -43,6 +43,7 @@ builder.Services.AddTransient<IServiceManagement, ServiceManagement>();
 //For Register MiddleWare
 builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, AuthorizationMiddlewareHandlerService>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddMemoryCache(); // Add MemoryCache for OTP registration
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 
