@@ -1,4 +1,4 @@
-﻿﻿using AutoMapper;
+﻿﻿﻿﻿﻿﻿﻿﻿using AutoMapper;
 using Parking.FindingSlotManagement.Application.Features.Admin.Accounts.CensorshipManagerAccount.Commands.CreateNewCensorshipManagerAccount;
 using Parking.FindingSlotManagement.Application.Features.Admin.Accounts.CensorshipManagerAccount.Commands.UpdateCensorshipManagerAccount;
 using Parking.FindingSlotManagement.Application.Features.Admin.Accounts.CensorshipManagerAccount.Queries.GetCensorshipManagerAccountList;
@@ -101,6 +101,7 @@ using Parking.FindingSlotManagement.Application.Features.Keeper.Commands.Disable
 using Parking.FindingSlotManagement.Application.Features.Customer.Account.AccountManagement.Queries.GetBanCountByUserId;
 using Parking.FindingSlotManagement.Application.Features.Admin.Wallet.Queries.GetWalletForAdmin;
 using Parking.FindingSlotManagement.Application.Features.Admin.ApproveParking.Queries.GetParkingInformationTab;
+using Parking.FindingSlotManagement.Application.Features.Customer.Parking.Queries.GetAllParkingWithActiveStatus;
 
 namespace Parking.FindingSlotManagement.Application.Mapping
 {
@@ -190,10 +191,18 @@ namespace Parking.FindingSlotManagement.Application.Mapping
             CreateMap<Domain.Entities.Parking, GetListParkingNearestYouQueryResponse>()
                 .ForMember(dto => dto.Avatar, act => act.MapFrom(obj => obj.ParkingSpotImages.FirstOrDefault().ImgPath))
                 .ReverseMap();
+            CreateMap<Domain.Entities.Parking, GetAllParkingWithActiveStatusResponse>()
+                .ForMember(dto => dto.Avatar, act => act.MapFrom(obj => obj.ParkingSpotImages.FirstOrDefault().ImgPath))
+                .ForMember(dto => dto.Latitude, act => act.MapFrom(obj => obj.Latitude))
+                .ForMember(dto => dto.Longitude, act => act.MapFrom(obj => obj.Longitude))
+                .ReverseMap();
             CreateMap<Domain.Entities.Parking, GetListParkingNearestWithDistanceResponse>()
                 .ForMember(dto => dto.Avatar, act => act.MapFrom(obj => obj.ParkingSpotImages.FirstOrDefault().ImgPath))
                 .ReverseMap();
-            CreateMap<Domain.Entities.Parking, GetListParkingByManagerIdResponse>().ReverseMap();
+            CreateMap<Domain.Entities.Parking, GetListParkingByManagerIdResponse>()
+                .ForMember(dto => dto.Latitude, act => act.MapFrom(obj => obj.Latitude))
+                .ForMember(dto => dto.Longitude, act => act.MapFrom(obj => obj.Longitude))
+                .ReverseMap();
             CreateMap<Domain.Entities.Parking, ParkingEntity>().ReverseMap();
             CreateMap<Domain.Entities.Parking, ParkingShowInCusDto>()
                 .ForMember(dto => dto.Avatar, act => act.MapFrom(obj => obj.ParkingSpotImages.FirstOrDefault().ImgPath))
@@ -208,7 +217,10 @@ namespace Parking.FindingSlotManagement.Application.Mapping
                 .ForMember(dto => dto.ApproveParkingStatus, act => act.MapFrom(obj => obj.ApproveParkings.FirstOrDefault().Status))
                 .ReverseMap();
             CreateMap<Domain.Entities.Parking, ParkingWithBookingDetailDto>().ReverseMap();
-            CreateMap<Domain.Entities.Parking, GetAllParkingForAdminResponse>().ReverseMap();
+            CreateMap<Domain.Entities.Parking, GetAllParkingForAdminResponse>()
+                .ForMember(dto => dto.Latitude, act => act.MapFrom(obj => obj.Latitude))
+                .ForMember(dto => dto.Longitude, act => act.MapFrom(obj => obj.Longitude))
+                .ReverseMap();
             CreateMap<Domain.Entities.Parking, GetListParkingNewWNoApproveResponse>().ReverseMap();
             CreateMap < Domain.Entities.Parking, ParkingSearchResult>().ReverseMap();
             CreateMap<Domain.Entities.Parking, ParkingDtoForAdmin>().ReverseMap();
