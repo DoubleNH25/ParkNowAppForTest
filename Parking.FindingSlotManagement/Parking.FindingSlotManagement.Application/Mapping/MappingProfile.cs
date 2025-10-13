@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿﻿using AutoMapper;
 using Parking.FindingSlotManagement.Application.Features.Admin.Accounts.CensorshipManagerAccount.Commands.CreateNewCensorshipManagerAccount;
 using Parking.FindingSlotManagement.Application.Features.Admin.Accounts.CensorshipManagerAccount.Commands.UpdateCensorshipManagerAccount;
 using Parking.FindingSlotManagement.Application.Features.Admin.Accounts.CensorshipManagerAccount.Queries.GetCensorshipManagerAccountList;
@@ -200,6 +200,8 @@ namespace Parking.FindingSlotManagement.Application.Mapping
                 .ReverseMap();
             CreateMap<Domain.Entities.Parking, ParkingDto>()
                 .ForMember(des => des.ParkingHasPrices, src => src.MapFrom(obj => obj.ParkingHasPrices))
+                .ForMember(dto => dto.Latitude, act => act.MapFrom(obj => obj.Latitude))
+                .ForMember(dto => dto.Longitude, act => act.MapFrom(obj => obj.Longitude))
                 .ReverseMap();
             CreateMap<Domain.Entities.Parking, GetAllParkingRequestResponse>()
                 .ForMember(dto => dto.BusinessProfileName, act => act.MapFrom(obj => obj.BusinessProfile.Name))
